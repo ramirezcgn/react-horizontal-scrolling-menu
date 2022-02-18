@@ -1,24 +1,13 @@
-# React horizontal scrolling menu
+# Fork of React horizontal scrolling menu
 
 ![example](/sample.gif)
 
-[![npm](https://img.shields.io/npm/v/react-horizontal-scrolling-menu.svg)](https://www.npmjs.com/package/react-horizontal-scrolling-menu)
-[![Tests](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/actions/workflows/tests.yml)
-[![codebeat badge](https://codebeat.co/badges/ac1ad321-e730-45de-92de-10b9a0e74cf9)](https://codebeat.co/projects/github-com-asmyshlyaev177-react-horizontal-scrolling-menu-main)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/433d9b4a8a374109a9f96b8faf3c175d)](https://www.codacy.com/gh/asmyshlyaev177/react-horizontal-scrolling-menu/dashboard?utm_source=github.com&utm_medium=referral&utm_content=asmyshlyaev177/react-horizontal-scrolling-menu&utm_campaign=Badge_Grade)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/)
-![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-horizontal-scrolling-menu.svg)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=asmyshlyaev177%40gmail%2ecom&lc=US&item_name=asmyshlyaev177&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
-
-### Proud corner
-
-[performance-dashboard-on-aws
-](https://github.com/awslabs/performance-dashboard-on-aws/blob/49ce2517a29569a9761dec8f212f25cf85a394af/frontend/src/components/Tabs.tsx#L3) |
-[React status code](https://react.statuscode.com/issues/257)
+[![npm](https://img.shields.io/npm/v/react-horizontal-scrolling-menu.svg)](https://www.npmjs.com/package/@ramirezcgn/react-horizontal-scrolling-menu)
+[![Tests](https://github.com/ramirezcgn/react-horizontal-scrolling-menu/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/ramirezcgn/react-horizontal-scrolling-menu/actions/workflows/tests.yml)
 
 ### Examples
 
-[Demo](https://asmyshlyaev177.github.io/react-horizontal-scrolling-menu)
+[Demo](https://ramirezcgn.github.io/react-horizontal-scrolling-menu)
 
 [Basic example](https://codesandbox.io/s/react-horizontal-scrolling-menu-v2-basic-example-swg0y?file=/src/index.tsx)
 
@@ -42,7 +31,7 @@
 
 [Custom transition/animation](https://codesandbox.io/s/custom-transition-animation-n2pyn)
 
-### Previous version [V1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/tree/v1)
+### Previous version [V1](https://github.com/ramirezcgn/react-horizontal-scrolling-menu/tree/v1)
 
 This is a horizontal scrolling menu component for React.
 Menu component has adaptive width, just set width for parent container.
@@ -59,14 +48,14 @@ Possible set default position on initialization.
 ## Quick start
 
 ```bash
-yarn add react-horizontal-scrolling-menu
+npm add @ramirezcgn/react-horizontal-scrolling-menu
 ```
 
 In project:
 
 ```javascript
 import React from 'react';
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
+import { ScrollMenu, VisibilityContext } from '@ramirezcgn/react-horizontal-scrolling-menu';
 
 const getItems = () =>
   Array(20)
@@ -94,9 +83,10 @@ function App() {
 
   return (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-      {items.map(({ id }) => (
+      {items.map(({ id, i }) => (
         <Card
           itemId={id} // NOTE: itemId is required for track items
+          itemClassName={ i % 2 ? 'odd' : 'even'} // Optional custom class for item container element
           title={id}
           key={id}
           onClick={handleClick(id)}
@@ -163,7 +153,7 @@ Check out Example in `example-nextjs` folder for info how to implement more feat
 You can clone repository and run demo project.
 
 ```bash
-git clone https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu
+git clone https://github.com/ramirezcgn/react-horizontal-scrolling-menu
 yarn install
 yarn run demo
 ```
@@ -291,6 +281,6 @@ My first npm project. Sorry for my english.
 
 Any contribution and correction appreciated. Just fork repo, commit and make PR, don't forget about tests.
 
-## [Contributing](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/blob/main/CONTRIBUTING.md)
+## [Contributing](https://github.com/ramirezcgn/react-horizontal-scrolling-menu/blob/main/CONTRIBUTING.md)
 
-## [Changelog](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/blob/main/CHANGELOG.md)
+## [Changelog](https://github.com/ramirezcgn/react-horizontal-scrolling-menu/blob/main/CHANGELOG.md)

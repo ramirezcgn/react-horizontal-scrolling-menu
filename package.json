@@ -1,8 +1,11 @@
 {
-  "name": "react-horizontal-scrolling-menu",
-  "version": "2.7.0",
+  "name": "@ramirezcgn/react-horizontal-scrolling-menu",
+  "version": "2.6.0",
   "author": "asmyshlyaev177",
-  "description": "Scrolling horizontal menu component for React, support mouse and touch devices.",
+  "contributors": [
+    "Nicolas Ramirez <ramirezcgn@gmail.com> (https://github.com/ramirezcgn"
+  ],
+  "description": "Fork of react-horizontal-scrolling-menu, scrolling horizontal menu component for React, support mouse and touch devices.",
   "license": "ISC",
   "main": "dist/index.umd.js",
   "browser": "dist/index.umd.js",
@@ -11,7 +14,7 @@
   "types": "dist/types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu.git"
+    "url": "git+https://github.com/ramirezcgn/react-horizontal-scrolling-menu.git"
   },
   "exports": {
     ".": {
