@@ -48,7 +48,7 @@ Possible set default position on initialization.
 ## Quick start
 
 ```bash
-npm add @ramirezcgn/react-horizontal-scrolling-menu
+npm install @ramirezcgn/react-horizontal-scrolling-menu
 ```
 
 In project:
