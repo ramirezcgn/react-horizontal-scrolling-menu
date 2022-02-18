@@ -1,4 +1,4 @@
-# Fork of React horizontal scrolling menu
+# Fork of [React horizontal scrolling menu](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu)
 
 ![example](/sample.gif)
 
