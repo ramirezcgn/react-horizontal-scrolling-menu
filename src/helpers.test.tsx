@@ -4,6 +4,7 @@ import {
   getElementOrConstructor,
   getItemElementById,
   getItemElementByIndex,
+  getItemId,
   getNodesFromRefs,
   observerEntriesToItems,
   scrollToItem,
@@ -124,6 +125,22 @@ describe('scrollToItem', () => {
       item.entry.target,
       options
     );
+  });
+
+  test('should not use polyfill when noPolyfill passed', () => {
+    const target = document.createElement('div');
+    const standartScrollIntoViewMock = jest.fn();
+    target.scrollIntoView = standartScrollIntoViewMock;
+
+    const item = {
+      entry: { target },
+    } as unknown as IOItem;
+
+    const noPolyfill = true;
+    scrollToItem(item, undefined, undefined, undefined, undefined, noPolyfill);
+
+    expect(scrollIntoView).not.toHaveBeenCalled();
+    expect(standartScrollIntoViewMock).toHaveBeenCalled();
   });
 
   test('should scroll to item with custom options', () => {
@@ -248,5 +265,34 @@ describe('filterSeparators', () => {
   test('should return argument if nothing to filter', () => {
     expect(filterSeparators(['test0', 'test1'])).toEqual(['test0', 'test1']);
     expect(filterSeparators([])).toEqual([]);
+  });
+});
+
+describe('getItemId', () => {
+  describe('itemId prop', () => {
+    const id = 'test123';
+    const Elem = (props: { itemId?: string | number }) => (
+      <div {...props}>test</div>
+    );
+
+    it('should return itemId if exists', () => {
+      expect(getItemId(<Elem itemId={id} />)).toEqual(id);
+      expect(getItemId(<Elem itemId={id} key={id} />)).toEqual(id);
+    });
+
+    it('should work if "id" is number', () => {
+      const id = 123;
+      const expected = String(id);
+      expect(getItemId(<Elem itemId={id} />)).toEqual(expected);
+      expect(getItemId(<Elem itemId={id} key={id} />)).toEqual(expected);
+    });
+
+    it('should return key if itemId does not exists', () => {
+      expect(getItemId(<Elem key={id} />)).toEqual(id);
+    });
+
+    it('should return empty string if itemId and key does not exists', () => {
+      expect(getItemId(<Elem />)).toEqual('');
+    });
   });
 });

@@ -2,6 +2,143 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.4](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v4.0.4-beta.1...v4.0.4) (2023-04-14)
+
+### [4.0.4-beta.1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v4.0.4-beta.0...v4.0.4-beta.1) (2023-04-14)
+
+### [4.0.3](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v4.0.2...v4.0.3) (2023-04-11)
+
+
+### Bug Fixes
+
+* removed copy package.json ([ce9699b](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/ce9699b8874d755489bc0717013e7d1232d9dff1))
+
+### [4.0.2](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v4.0.2-beta.0...v4.0.2) (2023-04-11)
+
+### [4.0.1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.2.5...v4.0.1) (2023-03-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* **styles:** Need to import styles in your code - example "import
+'react-horizontal-scrolling-menu/dist/styles.css'"
+
+### Bug Fixes
+
+* **styles.css import:** fixed exports field for /dist/styles.css ([2c47f89](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/2c47f892568468095f71b9ad8876b4ae5e579119)), closes [#231](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/231)
+* **styles:** bundle styles to styles.css file ([142dde6](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/142dde636878251fec20e07939e8e0532a22e304)), closes [#227](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/227)
+
+## [4.0.0](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.2.5...v4.0.0) (2023-03-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **styles:** Need to import styles in your code - example "import
+'react-horizontal-scrolling-menu/dist/styles.css'"
+
+227
+
+### Bug Fixes
+
+* **styles:** bundle styles to styles.css file ([314b894](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/314b89451c9608dd791b58a2de6e9b978a9362db))
+
+### [3.2.5](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.2.4...v3.2.5) (2023-02-19)
+
+### [3.2.4](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.2.3...v3.2.4) (2023-02-19)
+
+### [3.2.4-0](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.2.3...v3.2.4-0) (2023-02-19)
+
+### [3.2.3](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.2.2...v3.2.3) (2022-10-30)
+
+
+### Bug Fixes
+
+* **scroll by 1 item:** fns for scroll by 1 item ([679914c](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/679914c5e8bc5156eb0dbdf8abc729d0fc645829))
+
+### [3.2.1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.2.0...v3.2.1) (2022-10-23)
+
+## [3.2.0](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.1.1...v3.2.0) (2022-08-07)
+
+
+### Features
+
+* **rtl:** rtl support ([c727e1b](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/c727e1b1a89fdfb73f9a60dea421f7a1aecdb802))
+
+### [3.1.1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.1.0...v3.1.1) (2022-07-23)
+
+
+### Bug Fixes
+
+* convert itemId to string ([f7a75b3](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/f7a75b3a8ec0dfcc8aaee6656da5d3e06e5cc1d4)), closes [#207](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/207)
+
+## [3.1.0](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.0.1...v3.1.0) (2022-06-26)
+
+
+### Features
+
+* use key prop if itemId not provided, getItemId helper ([29967d2](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/29967d250da421696e54fe4a8a5aeb9dedbc275e))
+
+### [3.0.1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v3.0.0...v3.0.1) (2022-06-19)
+
+
+### Bug Fixes
+
+* fixed styles for wrapper ([5755c1d](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/5755c1df7d5b50520371ba7cacd578318aab9485))
+
+## [3.0.0](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v2.8.2...v3.0.0) (2022-06-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* Removed Arrows prop
+
+### Features
+
+* header and footer initial implementation ([7d18fd4](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/7d18fd4c6d3b5ed7c54a61c043a859b40de61819)), closes [#197](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/197)
+
+
+### Bug Fixes
+
+* removed globalThis ([5d3d82e](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/5d3d82e5412cc84c66b7091f6167e6241173df25))
+
+
+* test for header and footer, removed arrows ([4ae3014](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/4ae30149c673e41c9dd5123bd42e887ef9cebdf0))
+
+### [2.8.2](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v2.8.1...v2.8.2) (2022-05-17)
+
+### [2.8.1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v2.8.0...v2.8.1) (2022-05-17)
+
+
+### Bug Fixes
+
+* fixed Arrows props can't pass as component ([4a24803](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/4a24803df36118fb8ad302594bcbd9f5411f3c57))
+
+## [2.8.0](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v2.7.1...v2.8.0) (2022-05-17)
+
+
+### Features
+
+* arrows prop for use arrows with additional content ([7d53430](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/7d53430a957aaa0ec1db0d8be31a6a41a0beab35)), closes [#197](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/197)
+
+
+### Bug Fixes
+
+* changed target to es2015(es6) since some uglifiers don't support newer ([a6b42e5](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/a6b42e5700066ea287763586301afe49150ee2d0))
+
+### [2.7.2](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v2.7.1...v2.7.2) (2022-05-04)
+
+
+### Bug Fixes
+
+* changed target to es2015(es6) since some uglifiers don't support newer ([b92f230](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/b92f2301296605a5003bbea62163578e09e69cb0)), closes [#195](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/195)
+
+### [2.7.1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v2.7.0...v2.7.1) (2022-02-23)
+
+
+### Bug Fixes
+
+* nextjs complaining about useLayoutEffect ([#191](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/191)) ([b07a2b8](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/commit/b07a2b8abc31f2755092fb26598c01c086002c80))
+
 ## [2.7.0](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/compare/v2.6.1...v2.7.0) (2021-11-28)
 
 

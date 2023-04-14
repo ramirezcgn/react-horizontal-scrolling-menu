@@ -1,21 +1,22 @@
-import type { IOItem, Item, visibleItems as itemsArr } from './types';
+import type { IOItem, Item, visibleElements } from './types';
 import { filterSeparators } from './helpers';
+import { separatorString } from './constants';
 
 class ItemsMap extends Map<Item[0], Item[1]> {
   public toArr() {
     return this.sort([...this]);
   }
 
-  public toItems(): itemsArr {
+  public toItems(): visibleElements {
     return this.toArr().map(([key]) => key);
   }
 
-  public toItemsWithoutSeparators(): itemsArr {
+  public toItemsWithoutSeparators(): visibleElements {
     return filterSeparators(this.toItems());
   }
 
   // NOTE: for backward compatibility, to remove
-  public toItemsKeys(): itemsArr {
+  public toItemsKeys(): visibleElements {
     return this.toItems();
   }
 
@@ -28,10 +29,10 @@ class ItemsMap extends Map<Item[0], Item[1]> {
   set(key: Array<Item> | string, val?: IOItem): this {
     if (Array.isArray(key)) {
       this.sort(key).forEach(([itemId, ioitem]) => {
-        super.set(itemId, ioitem);
+        super.set(String(itemId), ioitem);
       });
     } else {
-      super.set(key, val!);
+      super.set(String(key), val!);
     }
     return this;
   }
@@ -59,23 +60,37 @@ class ItemsMap extends Map<Item[0], Item[1]> {
   ): number {
     return this.toArr().findIndex(predicate);
   }
-  public prev(item: string | IOItem): IOItem | undefined {
-    const arr = this.toArr();
+
+  public getCurrentPos(
+    item: string | IOItem,
+    onlyItems: boolean
+  ): [Item[], number] {
+    const arr = this.toArr().filter((el) =>
+      onlyItems ? !el?.[0]?.includes(separatorString) : el
+    );
     const current = arr.findIndex(
       ([itemId, ioitem]) => itemId === item || ioitem === item
     );
+    return [arr, current];
+  }
+  public prev(item: string | IOItem, onlyItems?: boolean): IOItem | undefined {
+    const [arr, current] = this.getCurrentPos(item, !!onlyItems);
     return current !== -1 ? arr[current - 1]?.[1] : undefined;
   }
-  public next(item: IOItem | string): IOItem | undefined {
-    const arr = this.toArr();
-    const current = arr.findIndex(
-      ([itemId, ioitem]) => itemId === item || ioitem === item
-    );
+
+  public next(item: IOItem | string, onlyItems?: boolean): IOItem | undefined {
+    const [arr, current] = this.getCurrentPos(item, !!onlyItems);
     return current !== -1 ? arr[current + 1]?.[1] : undefined;
   }
 
   public getVisible() {
     return this.filter((value: Item) => value[1].visible);
+  }
+
+  public getVisibleElements() {
+    return this.filter(
+      (value: Item) => !value[0].includes(separatorString) && value[1].visible
+    );
   }
 }
 export default ItemsMap;

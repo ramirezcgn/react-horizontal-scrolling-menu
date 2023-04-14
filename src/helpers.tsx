@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { ReactChild, ReactFragment, ReactPortal } from 'react';
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 import type {
   Refs,
   Item,
   IOItem,
   ItemOrElement,
-  visibleItems as visibleItemsType,
+  visibleElements,
   scrollToItemOptions,
   CustomScrollBehavior,
 } from './types';
-import { separatorString } from './constants';
+import { separatorString, id as itemId } from './constants';
 import { observerOptions } from './settings';
 import { dataKeyAttribute, dataIndexAttribute } from './constants';
 
@@ -27,8 +27,8 @@ export function observerEntriesToItems(
 ): Item[] {
   return [...entries].map((entry) => {
     const target = entry.target as HTMLElement;
-    const key: string = target?.dataset?.key || '';
-    const index = String(target?.dataset?.index || '');
+    const key = String(target?.dataset?.key ?? '');
+    const index = String(target?.dataset?.index ?? '');
 
     return [
       key,
@@ -47,22 +47,29 @@ function scrollToItem<T>(
   behavior?: ScrollBehavior | CustomScrollBehavior<T>,
   inline?: ScrollLogicalPosition,
   block?: ScrollLogicalPosition,
-  rest?: scrollToItemOptions
+  rest?: scrollToItemOptions,
+  noPolyfill?: boolean
 ): T | Promise<T> | void {
   const _item = (item as IOItem)?.entry?.target || item;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const _behavior: any = behavior || 'smooth';
 
-  return (
-    _item &&
-    scrollIntoView(_item, {
+  if (_item) {
+    if (noPolyfill) {
+      return _item?.scrollIntoView({
+        behavior: _behavior,
+        inline: inline || 'end',
+        block: block || 'nearest',
+      });
+    }
+    return scrollIntoView(_item, {
       behavior: _behavior,
       inline: inline || 'end',
       block: block || 'nearest',
       duration: 500,
       ...rest,
-    })
-  );
+    });
+  }
 }
 
 export { scrollToItem };
@@ -87,5 +94,11 @@ export function getElementOrConstructor(
   );
 }
 
-export const filterSeparators = (items: visibleItemsType): visibleItemsType =>
+export const filterSeparators = (items: visibleElements): visibleElements =>
   items.filter((item) => !new RegExp(`.*${separatorString}$`).test(item));
+
+export const getItemId = (item: ReactChild | ReactFragment | ReactPortal) =>
+  String(
+    (item as JSX.Element)?.props?.[itemId] ||
+      String((item as JSX.Element)?.key || '').replace(/^\.\$/, '')
+  );

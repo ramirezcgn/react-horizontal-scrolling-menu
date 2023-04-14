@@ -3,13 +3,13 @@ import React from 'react';
 import Separator from '../Separator';
 import Item from '../Item';
 import {
-  id as itemId,
   separatorString,
   itemClassName,
   customClassName,
   separatorClassName,
 } from '../../constants';
 import type { ItemType, Refs } from '../../types';
+import { getItemId } from '../../helpers';
 
 export type Props = {
   children?: ItemType | ItemType[];
@@ -39,7 +39,7 @@ function MenuItems({
   return (
     <>
       {childArray.map((child, index: number) => {
-        const id = (child as JSX.Element)?.props?.[itemId];
+        const id = getItemId(child);
         const customClass = (child as JSX.Element)?.props?.[customClassName];
         const separatorId = id + separatorString;
         const isLastItem = index + 1 === itemsCount;

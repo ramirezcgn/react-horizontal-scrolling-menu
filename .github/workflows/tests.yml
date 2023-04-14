@@ -5,22 +5,21 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-20.04
     container: cypress/included:8.4.1
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
-          
+          node-version: 14.x
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
@@ -31,25 +30,32 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-            
+
       - name: Install
         run: |
-          yarn install --immutable
-          cd example-nextjs && yarn install --immutable
-      
+          yarn setup
+
       - name: Unit tests
-        run: yarn test:unit
-        
+        run: yarn test:unit --coverage --coverageReporters="lcov"
+
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1
+        continue-on-error: true
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage/lcov.info
+
       - name: E2E tests
         uses: cypress-io/github-action@v2
+        timeout-minutes: 30
         env:
+          NODE_OPTIONS: --max-old-space-size=4096
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           env: true
-          install-command: yarn install --immutable 
-#           start: yarn install --immutable
+          # install-command: yarn install --immutable
           command: yarn test:e2e
-          
+
       - uses: actions/upload-artifact@v1
         if: failure()
         with:

@@ -2,7 +2,8 @@ import React from 'react';
 
 import throttle from 'lodash/throttle';
 import Styler from 'stylefire';
-import { animate } from 'popmotion/dist/popmotion';
+// import { animate } from 'popmotion'; // build
+import { animate } from 'popmotion/dist/popmotion'; // dev
 
 // NOTE: prevent scrolling on main page
 import usePreventBodyScroll from '../helpers/usePreventBodyScroll';
@@ -13,6 +14,7 @@ import useDrag from '../helpers/useDrag';
 // NOTE hide scrollbar in _app.js
 
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
+import 'react-horizontal-scrolling-menu/dist/styles.css';
 
 const isTest = process?.env?.NEXT_PUBLIC_IS_TEST;
 
@@ -47,6 +49,7 @@ const onWheel = (
   }
 };
 
+// eslint-disable-next-line radar/cognitive-complexity
 function App() {
   const [items, setItems] = React.useState(getItems);
   const [selected, setSelected] = React.useState<string[]>([]);
@@ -124,6 +127,8 @@ function App() {
         <div onMouseEnter={disableScroll} onMouseLeave={enableScroll}>
           <div onMouseLeave={dragStop}>
             <ScrollMenu
+              Header={<div>Header</div>}
+              Footer={() => <div>Footer</div>}
               LeftArrow={LeftArrow}
               RightArrow={RightArrow}
               onInit={restorePosition}
@@ -195,6 +200,7 @@ function LeftArrow() {
     <Arrow
       disabled={!initComplete || (initComplete && isFirstItemVisible)}
       onClick={() => scrollPrev(isTest ? 'auto' : undefined)}
+      className="left"
     >
       Left
     </Arrow>
@@ -209,6 +215,7 @@ function RightArrow() {
     <Arrow
       disabled={initComplete && isLastItemVisible}
       onClick={() => scrollNext(isTest ? 'auto' : undefined)}
+      className="right"
     >
       Right
     </Arrow>
@@ -219,15 +226,18 @@ function Arrow({
   children,
   disabled,
   onClick,
+  className,
 }: {
   children: React.ReactNode;
   disabled: boolean;
   onClick: VoidFunction;
+  className?: String;
 }) {
   return (
     <button
       disabled={disabled}
       onClick={onClick}
+      className={'arrow' + `-${className}`}
       style={{
         cursor: 'pointer',
         display: 'flex',
@@ -296,7 +306,6 @@ function Card({
   );
 }
 
-// TODO: nextjs complains about useLayoutEffect
 const Wrapper = () => {
   const [mounted, setMounted] = React.useState(false);
 
@@ -307,12 +316,14 @@ const Wrapper = () => {
   return mounted ? <App /> : null;
 };
 
+// eslint-disable-next-line react/prop-types
 export const OptionsWrapper = ({ children }) => (
   <div style={{ marginTop: '10px', display: 'flex', columnGap: '10px' }}>
     {children}
   </div>
 );
 
+// eslint-disable-next-line react/prop-types
 export const OptionItem = ({ children, label }) => (
   <div style={{ display: 'flex', flexDirection: 'column' }}>
     <label>{label}</label>

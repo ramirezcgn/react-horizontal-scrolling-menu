@@ -5,12 +5,13 @@ import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import typescript from '@rollup/plugin-typescript';
+import filesize from 'rollup-plugin-filesize';
 import pkg from './package.json';
 
 const input = 'src/index.tsx';
 
-const watch = process.env.ROLLUP_WATCH;
-const sourcemap = watch;
+const isProduction = !process.env.IS_DEVELOPMENT;
+const sourcemap = !isProduction;
 const clearScreen = { watch: { clearScreen: false } };
 
 const external = [
@@ -22,15 +23,18 @@ const plugins = [
   resolve({
     include: ['node_modules/**'],
   }),
-  typescript({ sourceMap: true, tsconfig: './tsconfig.json' }),
+  typescript({ sourceMap: false, tsconfig: './tsconfig.json' }),
   commonjs(),
   postcss({
+    extract: 'styles.css',
     modules: false,
+    minimize: true,
     use: ['sass'],
   }),
 
-  watch && sourcemaps(),
-  !watch && terser(),
+  !isProduction && sourcemaps(),
+  isProduction && terser(),
+  filesize(),
 ].filter(Boolean);
 
 export default [
@@ -39,7 +43,7 @@ export default [
     input,
     output: {
       name: 'react-horizontal-scrolling-menu',
-      file: pkg.browser,
+      file: pkg.unpkg,
       format: 'umd',
       sourcemap,
       globals: {

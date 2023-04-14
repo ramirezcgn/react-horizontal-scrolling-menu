@@ -1,9 +1,19 @@
 # Fork of [React horizontal scrolling menu](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu)
 
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://war.ukraine.ua)
+
 ![example](/sample.gif)
 
 [![npm](https://img.shields.io/npm/v/react-horizontal-scrolling-menu.svg)](https://www.npmjs.com/package/@ramirezcgn/react-horizontal-scrolling-menu)
 [![Tests](https://github.com/ramirezcgn/react-horizontal-scrolling-menu/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/ramirezcgn/react-horizontal-scrolling-menu/actions/workflows/tests.yml)
+
+### [Poll what you like/dislike/need from this library](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/discussions/221)
+
+### Proud corner
+
+[performance-dashboard-on-aws
+](https://github.com/awslabs/performance-dashboard-on-aws/blob/49ce2517a29569a9761dec8f212f25cf85a394af/frontend/src/components/Tabs.tsx#L3) |
+[React status code](https://react.statuscode.com/issues/257)
 
 ### Examples
 
@@ -29,9 +39,17 @@
 
 [Add item and scroll to it](https://codesandbox.io/s/basic-example-forked-3j0xm?file=/src/index.tsx)
 
+[RTL](https://codesandbox.io/s/rtl-ng3bq9?file=/src/index.tsx)
+
+[Loop scroll](https://codesandbox.io/s/loop-scroll-4w8ek6?file=/src/index.tsx)
+
 [Custom transition/animation](https://codesandbox.io/s/custom-transition-animation-n2pyn)
 
-### Previous version [V1](https://github.com/ramirezcgn/react-horizontal-scrolling-menu/tree/v1)
+### CRA(create-react-app notes)
+[Some struggle with import of esm modules and possible solutions](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/234)
+
+
+### Previous version [V1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/tree/v1)
 
 This is a horizontal scrolling menu component for React.
 Menu component has adaptive width, just set width for parent container.
@@ -56,6 +74,7 @@ In project:
 ```javascript
 import React from 'react';
 import { ScrollMenu, VisibilityContext } from '@ramirezcgn/react-horizontal-scrolling-menu';
+import '@ramirezcgn/react-horizontal-scrolling-menu/dist/styles.css';
 
 const getItems = () =>
   Array(20)
@@ -160,59 +179,69 @@ yarn run demo
 
 ### Helpers and api
 
-Children of main ScrollMenu component can use **VisibilityContext** to access state and callbacks.
+Children of main ScrollMenu component(arrows, fotter, items) can use **VisibilityContext** to access state and callbacks.
 Function callbacks also pass context, eg `onWheel`, `onScroll` etc.
 
 ## Properties and callbacks
 
-| Prop                     | Signature                                                |
-| ------------------------ | -------------------------------------------------------- |
-| LeftArrow                | React component for left arrow                           |
-| RightArrow               | React component for right arrow                          |
-| onWheel                  | (VisibilityContext, event) => void                       |
-| onScroll                 | (VisibilityContext, event) => void, will fire *before* scroll                       |
-| onInit                   | (VisibilityContext) => void                              |
-| apiRef                   | React.RefObject                                          |
-| onUpdate                 | (VisibilityContext) => void                              |
-| onMouseDown              | (VisibilityContext) => (React.MouseEventHandler) => void |
-| onMouseUp                | (VisibilityContext) => (React.MouseEventHandler) => void |
-| onMouseMove              | (VisibilityContext) => (React.MouseEventHandler) => void |
-| onTouchStart             | (VisibilityContext) => (React.MouseEventHandler) => void |
-| onTouchEnd               | (VisibilityContext) => (React.MouseEventHandler) => void |
-| onTouchMove              | (VisibilityContext) => (React.MouseEventHandler) => void |
-| itemClassName            | ClassName of Item                                        |
-| separatorClassName       | ClassName of Item's separator                            |
-| scrollContainerClassName | ClassName of scrollContainer                             |
-| transitionDuration       | Duration of transitions in ms, default 500               |
-| transitionBehavior       | 'smooth' \|'auto' \| customFunction                      |
-| transitionEase           | Ease function, eg t => t\*(2-t)                          |
-| wrapperClassName         | ClassName of the outer-most div                          |
+| Prop                     | Signature                                                     |
+| ------------------------ | ------------------------------------------------------------- |
+| LeftArrow                | React component for left arrow                                |
+| RightArrow               | React component for right arrow                               |
+| Header                   | React component Header                                        |
+| Footer                   | React component Footer                                        |
+| onWheel                  | (VisibilityContext, event) => void                            |
+| onScroll                 | (VisibilityContext, event) => void, will fire _before_ scroll |
+| onInit                   | (VisibilityContext) => void                                   |
+| apiRef                   | React.RefObject                                               |
+| onUpdate                 | (VisibilityContext) => void                                   |
+| onMouseDown              | (VisibilityContext) => (React.MouseEventHandler) => void      |
+| onMouseUp                | (VisibilityContext) => (React.MouseEventHandler) => void      |
+| onMouseMove              | (VisibilityContext) => (React.MouseEventHandler) => void      |
+| onTouchStart             | (VisibilityContext) => (React.MouseEventHandler) => void      |
+| onTouchEnd               | (VisibilityContext) => (React.MouseEventHandler) => void      |
+| onTouchMove              | (VisibilityContext) => (React.MouseEventHandler) => void      |
+| itemClassName            | ClassName of Item                                             |
+| separatorClassName       | ClassName of Item's separator                                 |
+| scrollContainerClassName | ClassName of scrollContainer                                  |
+| transitionDuration       | Duration of transitions in ms, default 500                    |
+| transitionBehavior       | 'smooth' \|'auto' \| customFunction                           |
+| transitionEase           | Ease function, eg t => t\*(2-t)                               |
+| wrapperClassName         | ClassName of the outer-most div                               |
+| RTL                      | Enable Right to left direction                                |
+| noPolyfill               | Don't use polyfill for scroll, no transitions                 |
 
 ### VisibilityContext
 
-| Prop                          | Signature                                              |
-| ----------------------------- | ------------------------------------------------------ |
-| getItemById                   | itemId => IOItem \| undefined                          |
-| getItemElementById            | itemId => DOM Element \| null                          |
-| getItemByIndex                | index => IOItem \| undefined                           |
-| getItemElementByIndex         | index => DOM Element \| null                           |
-| getNextItem                   | () => IOItem \| undefined)                             |
-| getPrevItem                   | () => IOItem \| undefined                              |
-| initComplete                  | boolean                                                |
-| isFirstItemVisible            | boolean                                                |
-| isItemVisible                 | itemId => boolean                                      |
-| isLastItem                    | boolean                                                |
-| isLastItemVisible             | boolean                                                |
-| scrollNext                    | (behavior, inline, block, ScrollOptions) => void       |
-| scrollPrev                    | (behavior, inline, block, ScrollOptions) => void       |
-| scrollToItem                  | (item, behavior, inline, block, ScrollOptions) => void |
-| visibleItemsWithoutSeparators | ['item1', 'item2']                                     |
-| initComplete                  | boolean                                                |
-| items                         | ItemsMap class instance                                |
-| scrollContainer               | Ref<OuterContainer>                                    |
-| visibleItems                  | ['item1', 'item1-separator', 'item2']                  |
+| Prop                                                            | Signature                                              |
+| --------------------------------------------------------------- | ------------------------------------------------------ |
+| getItemById                                                     | itemId => IOItem \| undefined                          |
+| getItemElementById                                              | itemId => DOM Element \| null                          |
+| getItemByIndex                                                  | index => IOItem \| undefined                           |
+| getItemElementByIndex                                           | index => DOM Element \| null                           |
+| getNextElement (use this first, result without separators)      | () => IOItem \| undefined                              |
+| getNextItem                                                     | () => IOItem \| undefined)                             |
+| getPrevElement (use this first, result without separators)      | () => IOItem \| undefined                              |
+| getPrevItem                                                     | () => IOItem \| undefined                              |
+| initComplete                                                    | boolean                                                |
+| isFirstItemVisible                                              | boolean                                                |
+| isItemVisible                                                   | itemId => boolean                                      |
+| isLastItem                                                      | boolean                                                |
+| isLastItemVisible                                               | boolean                                                |
+| scrollNext                                                      | (behavior, inline, block, ScrollOptions) => void       |
+| scrollPrev                                                      | (behavior, inline, block, ScrollOptions) => void       |
+| scrollToItem                                                    | (item, behavior, inline, block, ScrollOptions) => void |
+| initComplete                                                    | boolean                                                |
+| items                                                           | ItemsMap class instance                                |
+| scrollContainer                                                 | Ref<OuterContainer>                                    |
+| visibleElements                                                 | ['item1', 'item2']                                     |
+| visibleElementsWithSeparators                                   | ['item1', 'item1-separator', 'item2']                  |
+| visibleItemsWithoutSeparators (deprecated, use visibleElements) | ['item1', 'item2']                                     |
+| visibleItems (deprecated, use visibleElementsWithSeparators)    | ['item1', 'item1-separator', 'item2']                  |
 
 ### Transition/Animation
+
+NOTE: won't work with RTL prop
 
 Can use `transitionDuration`, `transitionEase` and `transitionBehavior`
 See [example](https://codesandbox.io/s/custom-transition-animation-n2pyn)
@@ -272,7 +301,7 @@ See [`apiRef` example and `Add item and scroll to it`](#examples)
 
 ## Browser support
 
-- Browser must support **IntersectionObserver API**, [**Element.scrollIntoView for Safari**](https://github.com/magic-akari/seamless-scroll-polyfill) and **requestAnimationFrame** or use polyfills.
+- Browser must support **IntersectionObserver API** and **requestAnimationFrame** or use polyfills.
 - Only modern browsers, no IE or smart toasters
 
 ## About

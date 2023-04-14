@@ -23,8 +23,17 @@ import { getElementOrConstructor } from './helpers';
 import slidingWindow from './slidingWindow';
 import getItemsPos from './getItemsPos';
 
-type ArrowType = React.FC | React.ReactNode;
+type ComponentType = React.ReactNode | JSX.Element | React.FC;
+
 export interface Props {
+  /**
+   Header component on top, can contain Arrows
+   */
+  Header?: ComponentType;
+  /**
+   Footer component on bottom, can contain Arrows
+   */
+  Footer?: ComponentType;
   /**
    Component for left arrow
 
@@ -32,7 +41,7 @@ export interface Props {
 
    or LeftArrow={<Arrow {...props />}}
    */
-  LeftArrow?: ArrowType;
+  LeftArrow?: ComponentType;
   /**
    Component for right arrow
 
@@ -40,7 +49,7 @@ export interface Props {
 
    or RightArrow={<Arrow {...props />}}
    */
-  RightArrow?: ArrowType;
+  RightArrow?: ComponentType;
   /**
     Every child should has unique `itemId` prop
    */
@@ -123,6 +132,11 @@ export interface Props {
     e.g. apiRef.current.scrollToItem(...)
    */
   apiRef?: React.MutableRefObject<publicApiType>;
+  RTL?: boolean;
+  /**
+    Disable scrollIntoView polyfill
+   */
+  noPolyfill?: boolean;
 }
 
 /**
@@ -134,6 +148,8 @@ function ScrollMenu({
   LeftArrow: _LeftArrow,
   RightArrow: _RightArrow,
   children,
+  Header: _Header,
+  Footer: _Footer,
   transitionDuration = 500,
   transitionEase,
   transitionBehavior,
@@ -153,9 +169,13 @@ function ScrollMenu({
   separatorClassName = '',
   wrapperClassName = '',
   apiRef = { current: {} as publicApiType },
+  RTL,
+  noPolyfill,
 }: Props): JSX.Element {
   const LeftArrow = getElementOrConstructor(_LeftArrow);
   const RightArrow = getElementOrConstructor(_RightArrow);
+  const Header = getElementOrConstructor(_Header);
+  const Footer = getElementOrConstructor(_Footer);
 
   const scrollContainerRef = React.useRef(null);
   const [menuItemsRefs] = React.useState<Refs>({});
@@ -175,23 +195,31 @@ function ScrollMenu({
   // NOTE: hack for detect when items added/removed dynamicaly
   const itemsChanged = useItemsChanged(children, items);
 
-  const { visibleItems } = useIntersectionObserver({
+  const { visibleElementsWithSeparators } = useIntersectionObserver({
     items,
     itemsChanged,
     options: observerOptions,
     refs: menuItemsRefs,
   });
-  const mounted = !!visibleItems.length;
+  const mounted = !!visibleElementsWithSeparators.length;
 
   const api = React.useMemo(
     () =>
-      createApi(items, visibleItems, scrollContainerRef, {
-        duration: transitionDuration,
-        ease: transitionEase,
-        behavior: transitionBehavior!,
-      }),
+      createApi(
+        items,
+        visibleElementsWithSeparators,
+        scrollContainerRef,
+        {
+          duration: transitionDuration,
+          ease: transitionEase,
+          behavior: transitionBehavior!,
+        },
+        RTL,
+        noPolyfill
+      ),
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [items, visibleItems, itemsChanged]
+    [items, visibleElementsWithSeparators, itemsChanged, RTL, noPolyfill]
   );
 
   const getContext = React.useCallback(
@@ -199,10 +227,10 @@ function ScrollMenu({
       ...api,
       initComplete: mounted,
       items,
-      visibleItems,
+      visibleElementsWithSeparators,
       scrollContainer: scrollContainerRef,
     }),
-    [api, mounted, items, visibleItems, scrollContainerRef]
+    [api, mounted, items, visibleElementsWithSeparators, scrollContainerRef]
   );
 
   const [context, setContext] = React.useState<publicApiType>(getContext);
@@ -216,7 +244,7 @@ function ScrollMenu({
     cb: () => onUpdate(context),
     condition: onInitCbFired,
     hash: JSON.stringify(
-      visibleItems
+      visibleElementsWithSeparators
         .concat(String(context?.isFirstItemVisible))
         .concat(String(context?.isLastItemVisible))
     ),
@@ -241,6 +269,11 @@ function ScrollMenu({
     [wrapperClassName]
   );
 
+  const containerClassName = React.useMemo(
+    () => `${scrollContainerClassName}${RTL ? ' rtl' : ''}`,
+    [RTL, scrollContainerClassName]
+  );
+
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
@@ -254,21 +287,25 @@ function ScrollMenu({
       onTouchMove={onTouchMove?.(context)}
     >
       <VisibilityContext.Provider value={context}>
-        {LeftArrow}
-        <ScrollContainer
-          className={scrollContainerClassName}
-          onScroll={scrollHandler}
-          scrollRef={scrollContainerRef}
-        >
-          <MenuItems
-            refs={menuItemsRefs}
-            itemClassName={itemClassName}
-            separatorClassName={separatorClassName}
+        <div className={constants.headerClassName}>{Header}</div>
+        <div className={constants.innerWrapperClassName}>
+          <div className={constants.arrowLeftClassName}>{LeftArrow}</div>
+          <ScrollContainer
+            className={containerClassName}
+            onScroll={scrollHandler}
+            scrollRef={scrollContainerRef}
           >
-            {children}
-          </MenuItems>
-        </ScrollContainer>
-        {RightArrow}
+            <MenuItems
+              refs={menuItemsRefs}
+              itemClassName={itemClassName}
+              separatorClassName={separatorClassName}
+            >
+              {children}
+            </MenuItems>
+          </ScrollContainer>
+          <div className={constants.arrowRightClassName}>{RightArrow}</div>
+        </div>
+        <div className={constants.footerClassName}>{Footer}</div>
       </VisibilityContext.Provider>
     </div>
   );

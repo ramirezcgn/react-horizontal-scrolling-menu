@@ -10,20 +10,22 @@ import type {
   CustomScrollBehavior,
   ItemOrElement,
   scrollToItemOptions,
-  visibleItems,
+  visibleElements,
 } from './types';
 
 export default function createApi(
   items: ItemsMap,
-  visibleItems: visibleItems = [],
+  visibleElementsWithSeparators: visibleElements = [],
   boundaryElement?: React.MutableRefObject<HTMLElement | null>,
   transitionOptions?: {
     duration?: number;
     ease?: (t: number) => number;
     behavior: string | Function;
-  }
+  },
+  RTL?: boolean,
+  noPolyfill?: boolean
 ) {
-  const visibleItemsWithoutSeparators = filterSeparators(visibleItems);
+  const visibleElements = filterSeparators(visibleElementsWithSeparators);
 
   const isFirstItemVisible = !!items.first()?.visible;
   const isLastItemVisible = !!items.last()?.visible;
@@ -34,12 +36,18 @@ export default function createApi(
   const getItemByIndex = (index: number | string) =>
     items.find((el) => String(el[1].index) === String(index))?.[1];
 
-  const isItemVisible = (id: string) => visibleItems.includes(id);
+  const isItemVisible = (id: string) => visibleElements.includes(String(id));
 
   const getPrevItem = () => items.prev(items.getVisible()?.[0]?.[1]);
 
+  const getPrevElement = () =>
+    items.prev(items.getVisibleElements()?.[0]?.[1], true);
+
   const getNextItem = () =>
     items.next(items.getVisible()?.slice?.(-1)?.[0]?.[1]);
+
+  const getNextElement = () =>
+    items.next(items.getVisibleElements()?.slice?.(-1)?.[0]?.[1], true);
 
   const isLastItem = (id: string) => items.last() === getItemById(id);
 
@@ -65,7 +73,8 @@ export default function createApi(
         boundary,
         duration: duration ?? transitionOptions?.duration,
         ease: ease ?? transitionOptions?.ease,
-      }
+      },
+      RTL || noPolyfill
     );
   };
 
@@ -91,7 +100,8 @@ export default function createApi(
         boundary,
         duration: duration ?? transitionOptions?.duration,
         ease: ease ?? transitionOptions?.ease,
-      }
+      },
+      RTL || noPolyfill
     );
   };
 
@@ -103,7 +113,9 @@ export default function createApi(
     getItemElementByIndex: (id: string | number) =>
       getItemElementByIndex(id, boundaryElement?.current),
     getNextItem,
+    getNextElement,
     getPrevItem,
+    getPrevElement,
     isFirstItemVisible,
     isItemVisible,
     isLastItem,
@@ -126,8 +138,11 @@ export default function createApi(
         ease: options?.ease ?? transitionOptions?.ease,
       });
     },
-    visibleItems,
-    visibleItemsWithoutSeparators,
+    visibleElements,
+    visibleElementsWithSeparators,
+
+    visibleItems: visibleElementsWithSeparators,
+    visibleItemsWithoutSeparators: visibleElements,
   };
 }
 
@@ -135,5 +150,15 @@ export interface publicApiType extends ReturnType<typeof createApi> {
   initComplete: boolean;
   items: ItemsMap;
   scrollContainer: React.RefObject<HTMLElement | null>;
-  visibleItems: visibleItems;
+
+  visibleElements: visibleElements;
+  visibleElementsWithSeparators: visibleElements;
+  /**
+    Deprecated, use visibleElementsWithSeparators
+   */
+  visibleItems: visibleElements;
+  /**
+    Deprecated, use visibleElements
+   */
+  visibleItemsWithoutSeparators: visibleElements;
 }
