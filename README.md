@@ -43,10 +43,11 @@
 
 [Loop scroll](https://codesandbox.io/s/loop-scroll-4w8ek6?file=/src/index.tsx)
 
+[One centered item](https://codesandbox.io/s/one-item-j9dzxd?file=/src/index.tsx)
+
 [Custom transition/animation](https://codesandbox.io/s/custom-transition-animation-n2pyn)
 
-### CRA(create-react-app notes)
-[Some struggle with import of esm modules and possible solutions](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/234)
+[Swipe on mobile devices(need to run locally, codesandbox has issues)](https://codesandbox.io/s/swipe-on-mobile-qmgqtj)
 
 
 ### Previous version [V1](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/tree/v1)
@@ -62,6 +63,9 @@ Component provide context with visible items and helpers.
 Possible set default position on initialization.
 
 :star: if you like the project :)
+
+### NextJS issues
+[Cannot use import statement outside a module](https://github.com/asmyshlyaev177/react-horizontal-scrolling-menu/issues/240)_
 
 ## Quick start
 
@@ -198,9 +202,9 @@ Function callbacks also pass context, eg `onWheel`, `onScroll` etc.
 | onMouseDown              | (VisibilityContext) => (React.MouseEventHandler) => void      |
 | onMouseUp                | (VisibilityContext) => (React.MouseEventHandler) => void      |
 | onMouseMove              | (VisibilityContext) => (React.MouseEventHandler) => void      |
-| onTouchStart             | (VisibilityContext) => (React.MouseEventHandler) => void      |
-| onTouchEnd               | (VisibilityContext) => (React.MouseEventHandler) => void      |
-| onTouchMove              | (VisibilityContext) => (React.MouseEventHandler) => void      |
+| onTouchMove              | (VisibilityContext) => (React.TouchEventHandler) => void      |
+| onTouchStart             | (VisibilityContext) => (React.TouchEventHandler) => void      |
+| onTouchEnd               | (VisibilityContext) => (React.TouchEventHandler) => void      |
 | itemClassName            | ClassName of Item                                             |
 | separatorClassName       | ClassName of Item's separator                                 |
 | scrollContainerClassName | ClassName of scrollContainer                                  |
