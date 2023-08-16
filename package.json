@@ -1,6 +1,6 @@
 {
   "name": "@ramirezcgn/react-horizontal-scrolling-menu",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "author": "asmyshlyaev177",
   "contributors": [
     "Nicolas Ramirez <ramirezcgn@gmail.com> (https://github.com/ramirezcgn"
@@ -18,7 +18,7 @@
   },
   "exports": {
     ".": {
-      "browser": "./dist/index.mjs",
+      "browser": "./dist/index.cjs",
       "module": "./dist/index.mjs",
       "import": "./dist/index.mjs",
       "umd": "./dist/index.cjs",
